@@ -4,10 +4,132 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<pbody>
-<form action="/sendPostGreeting" method="post">
-    <input type="submit" value="Send Greeting">
-</form>
-<p th:text="${greetings}"></p>
-    <body>
+<body>
+    <h1>Add a friend!</h1>
+    <p>Write destination and source email of users to create a friendship!</p>
+    <form action="/addFriend" method="post">
+        <input type="text"  name="sourceEmail" placeholder="Source email">
+        <input type="text"  name="destinationEmail" placeholder="Destination email">
+        <input type="text"  name="destinationHost" placeholder="Destination host">
+        <input type="submit" value="Add a friend">
+    </form>
+<p th:text="${response}"></p>
+
+
+
+    <form method="POST">
+
+    <table id = "pendingTable">
+        <p>Pending friendships</p>
+        <tr>
+            <th>Date</th>
+            <th>Source email</th>
+            <th>Destination email</th>
+            <th>Destination source</th>
+            <th>Accept / Deny</th>
+        </tr>
+        <tr  th:each="friendship : ${pendingFriendships}">
+            <input readonly hidden="true" type="hidden" name="id"
+                       id="friendshipId"
+                    th:value="${friendship.id}">
+            <input readonly hidden="true" type="hidden" name="destinationHost"
+                   id="destinationHostId"
+                   th:value="${friendship.destinationHost}">
+            <td th:text="${friendship.dateEstablished}"></td>
+            <td th:text="${friendship.sourceEmail}"></td>
+            <td th:text="${friendship.destinationEmail}"></td>
+            <td th:text="${friendship.destinationHost}"></td>
+            <td>
+                <button type="submit" th:formaction="acceptFriendship">Accept</button>
+           <button type="submit" th:formaction="denyFriendship">Deny</button>
+
+            </td>
+        </tr>
+    </table>
+    </form>
+
+    <form method="POST">
+
+        <table id = "acceptedTable">
+            <p>Accepted friendhips</p>
+            <tr>
+                <th>Date</th>
+                <th>Source email</th>
+                <th>Destination email</th>
+                <th>Destination source</th>
+                <th> Block / Remove</th>
+            </tr>
+            <tr  th:each="friendship : ${acceptedFriendships}">
+                <input readonly hidden="true" type="hidden" name="id"
+                       id="friendshipId1"
+                       th:value="${friendship.id}">
+                <input readonly hidden="true" type="hidden" name="destinationHost"
+                       id="destinationHostId2"
+                       th:value="${friendship.destinationHost}">
+                <td th:text="${friendship.dateEstablished}"></td>
+                <td th:text="${friendship.sourceEmail}"></td>
+                <td th:text="${friendship.destinationEmail}"></td>
+                <td th:text="${friendship.destinationHost}"></td>
+                <td>
+                    <button type="submit" th:formaction="blockFriendship">Block</button>
+                    <button type="submit" th:formaction="removeFriendship">Remove</button>
+
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <form method="POST">
+        <table id = "denyTable">
+            <p>Denied friednships</p>
+            <tr>
+                <th>Date</th>
+                <th>Source email</th>
+                <th>Destination email</th>
+                <th>Destination source</th>
+
+            </tr>
+            <tr  th:each="friendship : ${deniedFriendships}">
+                <input readonly hidden="true" type="hidden" name="id"
+                       id="friendshipId2"
+                       th:value="${friendship.id}">
+                <input readonly hidden="true" type="hidden" name="destinationHost"
+                       id="destinationHostId3"
+                       th:value="${friendship.destinationHost}">
+                <td th:text="${friendship.dateEstablished}"></td>
+                <td th:text="${friendship.sourceEmail}"></td>
+                <td th:text="${friendship.destinationEmail}"></td>
+                <td th:text="${friendship.destinationHost}"></td>
+
+            </tr>
+        </table>
+    </form>
+
+    <form method="POST">
+        <table id = "blockTable">
+            <p>Blocked friednships</p>
+            <tr>
+                <th>Date</th>
+                <th>Source email</th>
+                <th>Destination email</th>
+                <th>Destination source</th>
+
+            </tr>
+            <tr  th:each="friendship : ${blockedFriendships}">
+                <input readonly hidden="true" type="hidden" name="id"
+                       id="friendshipId3"
+                       th:value="${friendship.id}">
+                <input readonly hidden="true" type="hidden" name="destinationHost"
+                       id="destinationHostId4"
+                       th:value="${friendship.destinationHost}">
+                <td th:text="${friendship.dateEstablished}"></td>
+                <td th:text="${friendship.sourceEmail}"></td>
+                <td th:text="${friendship.destinationEmail}"></td>
+                <td th:text="${friendship.destinationHost}"></td>
+
+            </tr>
+        </table>
+    </form>
+    </body>
+
 </html>
