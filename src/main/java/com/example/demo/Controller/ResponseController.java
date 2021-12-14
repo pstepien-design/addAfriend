@@ -32,7 +32,7 @@ public class ResponseController {
         for(String s: reqSplit){
             System.out.println(s);
         }
-        if(reqSplit[0].contains("ADD")){
+        if(reqSplit[0].toUpperCase().contains("ADD")){
             String sourceEmail = reqSplit[1]+"@"+reqSplit[2];
             String destinationEmail = reqSplit[3]+"@"+reqSplit[4];
            if(!(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail))) {
@@ -45,7 +45,7 @@ public class ResponseController {
                return ResponseEntity.ok("Friendship could not have been made");
            }
         }
-        else if(reqSplit[0].contains("BLOCK")){
+        else if(reqSplit[0].toUpperCase().contains("BLOCK")){
             String sourceEmail = reqSplit[1]+"@"+reqSplit[2];
             String destinationEmail = reqSplit[3]+"@"+reqSplit[4];
             if(!(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail))) {
@@ -57,7 +57,7 @@ public class ResponseController {
                 return ResponseEntity.ok("Friendship could not have been blocked");
             }
         }
-        else if(reqSplit[0].contains("DENY")){
+        else if(reqSplit[0].toUpperCase().contains("DENY")){
             String sourceEmail = reqSplit[1]+"@"+reqSplit[2];
             String destinationEmail = reqSplit[3]+"@"+reqSplit[4];
             if(!(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail))) {
@@ -69,7 +69,7 @@ public class ResponseController {
                 return ResponseEntity.ok("Friendship could not have been blocked");
             }
         }
-        else if(reqSplit[0].contains("ACCEPT")){
+        else if(reqSplit[0].toUpperCase().contains("ACCEPT")){
             String sourceEmail = reqSplit[1]+"@"+reqSplit[2];
             String destinationEmail = reqSplit[3]+"@"+reqSplit[4];
             if((!(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)))&& (destinationHost != ourHost)) {
@@ -79,6 +79,18 @@ public class ResponseController {
             }
             else{
                 return ResponseEntity.ok("Friendship could not have been accepted");
+            }
+        }
+        else if(reqSplit[0].toUpperCase().contains("REMOVE")){
+            String sourceEmail = reqSplit[1]+"@"+reqSplit[2];
+            String destinationEmail = reqSplit[3]+"@"+reqSplit[4];
+            if((!(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)))&& (destinationHost != ourHost)) {
+                Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
+                friendshipService.deleteFriendship(friendship.getId());
+                return ResponseEntity.ok("Friendship between " + sourceEmail + " and " + destinationEmail + " has been removed");
+            }
+            else{
+                return ResponseEntity.ok("Friendship could not have been removed");
             }
         }
         else{

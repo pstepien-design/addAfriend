@@ -25,6 +25,7 @@
             <th>Date</th>
             <th>Source email</th>
             <th>Destination email</th>
+            <th>Destination source</th>
             <th>Accept / Deny</th>
         </tr>
         <tr  th:each="friendship : ${pendingFriendships}">
@@ -55,7 +56,8 @@
                 <th>Date</th>
                 <th>Source email</th>
                 <th>Destination email</th>
-                <th> Block</th>
+                <th>Destination source</th>
+                <th> Block / Remove</th>
             </tr>
             <tr  th:each="friendship : ${acceptedFriendships}">
                 <input readonly hidden="true" type="hidden" name="id"
@@ -70,6 +72,7 @@
                 <td th:text="${friendship.destinationHost}"></td>
                 <td>
                     <button type="submit" th:formaction="blockFriendship">Block</button>
+                    <button type="submit" th:formaction="removeFriendship">Block</button>
 
                 </td>
             </tr>
@@ -83,6 +86,7 @@
                 <th>Date</th>
                 <th>Source email</th>
                 <th>Destination email</th>
+                <th>Destination source</th>
 
             </tr>
             <tr  th:each="friendship : ${deniedFriendships}">
@@ -108,6 +112,7 @@
                 <th>Date</th>
                 <th>Source email</th>
                 <th>Destination email</th>
+                <th>Destination source</th>
 
             </tr>
             <tr  th:each="friendship : ${blockedFriendships}">
