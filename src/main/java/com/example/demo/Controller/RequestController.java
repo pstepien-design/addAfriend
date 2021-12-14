@@ -49,14 +49,15 @@ public class RequestController {
             final String SERVER_URL = destinationHost+"/friendship";
             System.out.println(SERVER_URL);
 
-            String response = requestService.request(SERVER_URL, "ADD", sourceEmail, destinationEmail);
 
+            String response = requestService.request(SERVER_URL, "ADD", sourceEmail, destinationEmail);
             Friendship friendship = new Friendship(sourceEmail, destinationEmail, date, destinationHost);
             friendshipService.addFriendship(friendship);
+
             model.addAttribute("response", response);
         }
         else{
-            model.addAttribute("response", "friendship already exists");
+            model.addAttribute("response", "Friendship already exists!");
         }
 
 
@@ -70,10 +71,12 @@ public class RequestController {
 
         final String SERVER_URL = destinationHost+"/friendship";
 
-        String response = requestService.request(SERVER_URL, "ACCEPT", sourceEmail, destinationEmail);
 
+        String response = requestService.request(SERVER_URL, "ACCEPT", sourceEmail, destinationEmail);
         Friendship newFriendship = new Friendship(friendship.getSourceEmail(), friendship.getDestinationEmail(), friendship.getDateEstablished(), destinationHost, "accepted");
         friendshipService.editFriendship(id, newFriendship);
+
+        System.out.println(response);
         return "redirect:/";
     }
     @PostMapping("/denyFriendship")
@@ -84,9 +87,12 @@ public class RequestController {
 
         final String SERVER_URL = destinationHost+"/friendship";
 
-        String response = requestService.request(SERVER_URL, "DENIED", sourceEmail, destinationEmail);
 
+
+
+        String response = requestService.request(SERVER_URL, "DENY", sourceEmail, destinationEmail);
         friendshipService.deleteFriendship(id);
+        System.out.println(response);
         return "redirect:/";
     }
     @PostMapping("/blockFriendship")
@@ -97,10 +103,12 @@ public class RequestController {
 
         final String SERVER_URL = destinationHost+"/friendship";
 
-        String response = requestService.request(SERVER_URL, "BLOCKED", sourceEmail, destinationEmail);
+        String response = requestService.request(SERVER_URL, "BLOCK", sourceEmail, destinationEmail);
 
         Friendship newFriendship = new Friendship(friendship.getSourceEmail(), friendship.getDestinationEmail(), friendship.getDateEstablished(), destinationHost, "blocked");
-        friendshipService.editFriendship(id, newFriendship);
+
+
+        System.out.println(response);
         return "redirect:/";
     }
     @PostMapping("/removeFriendship")
@@ -111,10 +119,12 @@ public class RequestController {
 
         final String SERVER_URL = destinationHost+"/friendship";
 
-        String response = requestService.request(SERVER_URL, "REMOVE", sourceEmail, destinationEmail);
 
+
+
+        String response = requestService.request(SERVER_URL, "REMOVE", sourceEmail, destinationEmail);
         friendshipService.deleteFriendship(id);
-        friendshipService.deleteFriendship(id);
+        System.out.println(response);
         return "redirect:/";
     }
 
