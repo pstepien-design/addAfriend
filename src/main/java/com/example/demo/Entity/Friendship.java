@@ -20,8 +20,8 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "friendships", schema = "easyvote", uniqueConstraints={
-        @UniqueConstraint(columnNames = {"email1", "email2"})
+@Table(name = "friendships", schema = "addafriend", uniqueConstraints={
+        @UniqueConstraint(columnNames = {"sourceEmail", "destinationEmail"})
 })
 public class Friendship {
 
@@ -31,10 +31,13 @@ public class Friendship {
     private Long id;
 
     @Column(nullable = false)
-    private String email1;
+    private String sourceEmail;
 
     @Column(nullable = false)
-    private String email2;
+    private String destinationEmail;
+
+    @Column(nullable = false)
+    private String destinationHost;
 
     @Column()
     private String status = "pending";
@@ -42,10 +45,31 @@ public class Friendship {
     @Column()
     private LocalDate dateEstablished;
 
-    public Friendship(String email1, String email2, LocalDate dateEstablished) {
-        this.email1 = email1;
-        this.email2 = email2;
+    public Friendship(String sourceEmail, String destinationEmail, LocalDate dateEstablished, String destinationHost) {
+        this.sourceEmail = sourceEmail;
+        this.destinationEmail = destinationEmail;
         this.dateEstablished = dateEstablished;
+        this.destinationHost = destinationHost;
+    }
+    public Friendship(String sourceEmail, String destinationEmail, LocalDate dateEstablished) {
+        this.sourceEmail = sourceEmail;
+        this.destinationEmail = destinationEmail;
+        this.dateEstablished = dateEstablished;
+    }
+
+    public Friendship(String sourceEmail, String destinationEmail, String destinationHost, LocalDate dateEstablished) {
+        this.sourceEmail = sourceEmail;
+        this.destinationEmail = destinationEmail;
+        this.destinationHost = destinationHost;
+        this.dateEstablished = dateEstablished;
+    }
+
+    public Friendship(String sourceEmail, String destinationEmail, LocalDate dateEstablished, String destinationHost, String status) {
+        this.sourceEmail = sourceEmail;
+        this.destinationEmail = destinationEmail;
+        this.dateEstablished = dateEstablished;
+        this.destinationHost = destinationHost;
+        this.status = status;
     }
 
 }
