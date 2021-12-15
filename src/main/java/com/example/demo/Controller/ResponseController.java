@@ -37,8 +37,8 @@ public class ResponseController {
         for(String s: reqSplit){
             System.out.println(s);
         }
-        String destinationHost = reqSplit[5];
-        String sourceHost = reqSplit[3];
+        String destinationHost = reqSplit[4];
+        String sourceHost = reqSplit[2];
         System.out.println("preparing response");
         if(reqSplit[0].toUpperCase().contains("ADD")){
             String sourceEmail = reqSplit[1];
@@ -55,7 +55,7 @@ public class ResponseController {
         }
         else if(reqSplit[0].toUpperCase().contains("BLOCK")){
             String sourceEmail = reqSplit[1];
-            String destinationEmail =reqSplit[2];
+            String destinationEmail =reqSplit[3];
             if((friendshipService.ifFriendshipExists(sourceEmail, destinationEmail))) {
              Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
              friendship.setStatus("blocked");
@@ -87,7 +87,7 @@ public class ResponseController {
         }
         else if(reqSplit[0].toUpperCase().contains("ACCEPT")){
             String sourceEmail = reqSplit[1];
-            String destinationEmail =reqSplit[2];
+            String destinationEmail =reqSplit[3];
             if(((friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)))) {
                 Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
                 if(friendship.getStatus().equals("pending")) {
@@ -104,7 +104,7 @@ public class ResponseController {
         }
         else if(reqSplit[0].toUpperCase().contains("REMOVE")){
             String sourceEmail = reqSplit[1];
-            String destinationEmail =reqSplit[2];
+            String destinationEmail =reqSplit[3];
             if(((friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)))) {
                 Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
                 friendshipService.deleteFriendship(friendship.getId());
