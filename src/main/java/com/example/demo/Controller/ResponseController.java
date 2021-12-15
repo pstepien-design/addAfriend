@@ -119,9 +119,8 @@ public class ResponseController {
             String sourceEmail = reqSplit[3];
             String destinationEmail =reqSplit[1];
             if(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)){
-                Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
-
-                friendshipService.deleteFriendship(friendship.getId());
+                Friendship myFriendship = friendshipService.findBySourceEmailAndDestinationEmail(destinationEmail, sourceEmail);
+                friendshipService.deleteFriendship(myFriendship.getId());
                     String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been removed";
                     return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
 
