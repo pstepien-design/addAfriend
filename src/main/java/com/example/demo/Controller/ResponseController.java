@@ -64,6 +64,10 @@ public class ResponseController {
                    return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
 
                }
+               else{
+                   String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " could not have been accepted";
+                   return ResponseEntity.ok(responseService.createResponse(HttpStatus.INTERNAL_SERVER_ERROR, phrase));
+               }
             }
 
             else{
@@ -83,6 +87,10 @@ public class ResponseController {
 
 
             }
+            else{
+                String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " could not have been blocked";
+                return ResponseEntity.ok(responseService.createResponse(HttpStatus.INTERNAL_SERVER_ERROR, phrase));
+            }
         }
         else if(reqSplit[0].toUpperCase().contains("DENY")){
             String sourceEmail = reqSplit[3];
@@ -94,6 +102,10 @@ public class ResponseController {
                     String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been denied";
                     return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
 
+                }
+                else{
+                    String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " could not have been denied";
+                    return ResponseEntity.ok(responseService.createResponse(HttpStatus.INTERNAL_SERVER_ERROR, phrase));
                 }
             }
             else{
@@ -113,6 +125,7 @@ public class ResponseController {
 
 
             }
+
             else{
                 String phrase = "Friendship could not have been removed";
                 return ResponseEntity.ok(responseService.createResponse(HttpStatus.INTERNAL_SERVER_ERROR, phrase));
@@ -124,8 +137,6 @@ public class ResponseController {
             return ResponseEntity.ok(responseService.createResponse(HttpStatus.INTERNAL_SERVER_ERROR, phrase));
 
         }
-        String phrase = "Desired request could not be made";
-        return ResponseEntity.ok(responseService.createResponse(HttpStatus.INTERNAL_SERVER_ERROR, phrase));
     }
 
 
