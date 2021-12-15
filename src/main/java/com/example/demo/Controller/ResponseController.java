@@ -64,6 +64,7 @@ public class ResponseController {
                 System.out.println(sourceEmail);
                 System.out.println(destinationEmail);
                 Friendship myFriendship = friendshipService.findBySourceEmailAndDestinationEmail(destinationEmail, sourceEmail);
+                System.out.println(myFriendship.getStatus());
                if(myFriendship.getStatus().equals("requested")) {
                    System.out.println("friendship status is requested");
                    myFriendship.setStatus("accepted");
