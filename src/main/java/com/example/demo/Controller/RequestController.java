@@ -88,7 +88,7 @@ public class RequestController {
         }
         return "redirect:/";
     }
-    @PostMapping("/denyFriendship")
+/*    @PostMapping("/denyFriendship")
     public String denyFriendship(@ModelAttribute("id") Long id){
         Friendship friendship = friendshipService.findById(id);
         String sourceEmail = friendship.getSourceEmail();
@@ -145,7 +145,7 @@ public class RequestController {
         String response = requestService.request(SERVER_URL, "REMOVE", sourceEmail, destinationEmail, sourceHost, destinationHost);
         System.out.println(response);
         return "redirect:/";
-    }
+    }*/
 
 
 
