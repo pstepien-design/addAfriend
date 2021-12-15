@@ -56,9 +56,12 @@ public class ResponseController {
         else if(reqSplit[0].toUpperCase().contains("ACCEPT")){
             String sourceEmail = reqSplit[3];
             String destinationEmail =reqSplit[1];
+            System.out.println("we are here");
             if(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)){
+                System.out.println("friendship exists");
                 Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
                if(friendship.getStatus().equals("requested")) {
+                   System.out.println("friendship status is requested");
                    friendship.setStatus("accepted");
                    String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been accepted";
                    return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
