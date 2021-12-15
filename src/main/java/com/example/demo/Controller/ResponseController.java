@@ -83,7 +83,9 @@ public class ResponseController {
             String destinationEmail =reqSplit[1];
             if(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)){
                 Friendship myFriendship = friendshipService.findBySourceEmailAndDestinationEmail(destinationEmail, sourceEmail);
-                myFriendship.setStatus("blocked");
+                Friendship newFriendship = myFriendship;
+                newFriendship.setStatus("blocked");
+                friendshipService.editFriendship(myFriendship.getId(), newFriendship);
                    String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been blocked";
                    return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
 
