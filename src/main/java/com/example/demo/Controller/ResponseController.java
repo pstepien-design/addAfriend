@@ -65,18 +65,11 @@ public class ResponseController {
                 System.out.println(destinationEmail);
                 Friendship myFriendship = friendshipService.findBySourceEmailAndDestinationEmail(destinationEmail, sourceEmail);
                 System.out.println(myFriendship.getStatus());
-               if(myFriendship.getStatus().equals("requested")) {
-                   System.out.println("friendship status is requested");
-                   myFriendship.setStatus("accepted");
+
                    String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been accepted";
                    return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
 
-               }
-               else{
-                   System.out.println("Frienship status" +myFriendship.getStatus());
-                   String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " could not have been accepted";
-                   return ResponseEntity.ok(responseService.createResponse(HttpStatus.INTERNAL_SERVER_ERROR, phrase));
-               }
+
             }
 
             else{
@@ -106,16 +99,11 @@ public class ResponseController {
             String destinationEmail =reqSplit[1];
             if(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)){
                 Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
-                if(friendship.getStatus().equals("requested")) {
 
                     String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been denied";
                     return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
 
-                }
-                else{
-                    String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " could not have been denied";
-                    return ResponseEntity.ok(responseService.createResponse(HttpStatus.INTERNAL_SERVER_ERROR, phrase));
-                }
+
             }
             else{
                 String phrase = "Friendship does not exists";
