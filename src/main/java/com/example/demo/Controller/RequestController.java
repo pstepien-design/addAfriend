@@ -78,11 +78,13 @@ public class RequestController {
 
             final String SERVER_URL = destinationHost + "/friendship";
 
+            String response = requestService.request(SERVER_URL, "ACCEPT", sourceEmail, destinationEmail, sourceHost, destinationHost);
+
+
             Friendship newFriendship = new Friendship(friendship.getSourceEmail(), friendship.getDestinationEmail(), friendship.getDateEstablished(), destinationHost,  "accepted", sourceHost);
             friendshipService.editFriendship(id, newFriendship);
 
 
-            String response = requestService.request(SERVER_URL, "ACCEPT", sourceEmail, destinationEmail, sourceHost, destinationHost);
 
             System.out.println(response);
         }
@@ -100,10 +102,10 @@ public class RequestController {
 
 
 
+       String response = requestService.request(SERVER_URL, "DENY", sourceEmail, destinationEmail, sourceHost, destinationHost);
 
 
         friendshipService.deleteFriendship(id);
-        String response = requestService.request(SERVER_URL, "DENY", sourceEmail, destinationEmail, sourceHost, destinationHost);
         return "redirect:/";
     }
     @PostMapping("/blockFriendship")
@@ -119,10 +121,10 @@ public class RequestController {
         final String SERVER_URL = destinationHost+"/friendship";
 
 
+        String response = requestService.request(SERVER_URL, "BLOCK", sourceEmail, destinationEmail, sourceHost, destinationHost);
 
         Friendship newFriendship = new Friendship(friendship.getSourceEmail(), friendship.getDestinationEmail(), friendship.getDateEstablished(), friendship.getDestinationHost(), "blocked", friendship.getSourceHost());
         friendshipService.editFriendship(id, newFriendship);
-        String response = requestService.request(SERVER_URL, "BLOCK", sourceEmail, destinationEmail, sourceHost, destinationHost);
 
         System.out.println(response);
         return "redirect:/";
@@ -140,9 +142,9 @@ public class RequestController {
 
 
 
+        String response = requestService.request(SERVER_URL, "REMOVE", sourceEmail, destinationEmail, sourceHost, destinationHost);
 
         friendshipService.deleteFriendship(id);
-        String response = requestService.request(SERVER_URL, "REMOVE", sourceEmail, destinationEmail, sourceHost, destinationHost);
         System.out.println(response);
         return "redirect:/";
     }
