@@ -37,12 +37,12 @@ public class ResponseController {
         for(String s: reqSplit){
             System.out.println(s);
         }
-        String destinationHost = reqSplit[4];
+        String destinationHost = reqSplit[5];
         String sourceHost = reqSplit[3];
         System.out.println("preparing response");
         if(reqSplit[0].toUpperCase().contains("ADD")){
             String sourceEmail = reqSplit[1];
-            String destinationEmail = reqSplit[2];
+            String destinationEmail = reqSplit[3];
            if(!(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail))) {
                Friendship friendship = new Friendship(sourceEmail, destinationEmail, date, destinationHost, "requested", sourceHost);
                friendshipService.addFriendship(friendship);
@@ -69,7 +69,7 @@ public class ResponseController {
         }
         else if(reqSplit[0].toUpperCase().contains("DENY")){
             String sourceEmail = reqSplit[1];
-            String destinationEmail = reqSplit[2];
+            String destinationEmail = reqSplit[3];
             if(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)) {
                 System.out.println("denying");
                 Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
