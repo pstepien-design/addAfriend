@@ -68,18 +68,20 @@ public class RequestController {
     @PostMapping("/acceptFriendship")
     public String acceptFriendship(@ModelAttribute("id") Long id,  @ModelAttribute("destinationHost") String destinationHost, @ModelAttribute("sourceHost") String sourceHost){
         Friendship friendship = friendshipService.findById(id);
-        String sourceEmail = friendship.getSourceEmail();
-        String destinationEmail = friendship.getDestinationEmail();
+        if(friendship.getStatus().equals("requested")) {
+            String sourceEmail = friendship.getSourceEmail();
+            String destinationEmail = friendship.getDestinationEmail();
 
-        final String SERVER_URL = destinationHost+"/friendship";
+            final String SERVER_URL = destinationHost + "/friendship";
 
-        Friendship newFriendship = new Friendship(friendship.getSourceEmail(), friendship.getDestinationEmail(), friendship.getDateEstablished(), destinationHost, "accepted");
-        friendshipService.editFriendship(id, newFriendship);
+            Friendship newFriendship = new Friendship(friendship.getSourceEmail(), friendship.getDestinationEmail(), friendship.getDateEstablished(), destinationHost, "accepted");
+            friendshipService.editFriendship(id, newFriendship);
 
 
-        String response = requestService.request(SERVER_URL, "ACCEPT", sourceEmail, destinationEmail, sourceHost, destinationHost);
+            String response = requestService.request(SERVER_URL, "ACCEPT", sourceEmail, destinationEmail, sourceHost, destinationHost);
 
-        System.out.println(response);
+            System.out.println(response);
+        }
         return "redirect:/";
     }
     @PostMapping("/denyFriendship")
