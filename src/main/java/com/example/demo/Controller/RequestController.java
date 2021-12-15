@@ -40,6 +40,7 @@ public class RequestController {
 
     @PostMapping("/addFriend")
     public String addFriend(@ModelAttribute("sourceEmail") String sourceEmail,
+                            @ModelAttribute("sourceHost") String sourceHost,
                             @ModelAttribute("destinationEmail") String destinationEmail,
                             @ModelAttribute("destinationHost") String destinationHost,
                             Model model){
@@ -53,7 +54,7 @@ public class RequestController {
 
             Friendship friendship = new Friendship(sourceEmail, destinationEmail, date, destinationHost);
             friendshipService.addFriendship(friendship);
-            String response = requestService.request(SERVER_URL, "ADD", sourceEmail, destinationEmail);
+            String response = requestService.request(SERVER_URL, "ADD", sourceEmail, destinationEmail, sourceHost, destinationHost);
 
             model.addAttribute("response", response);
         }
@@ -65,7 +66,7 @@ public class RequestController {
         return "redirect:/";
     }
     @PostMapping("/acceptFriendship")
-    public String acceptFriendship(@ModelAttribute("id") Long id,  @ModelAttribute("destinationHost") String destinationHost){
+    public String acceptFriendship(@ModelAttribute("id") Long id,  @ModelAttribute("destinationHost") String destinationHost, @ModelAttribute("sourceHost") String sourceHost){
         Friendship friendship = friendshipService.findById(id);
         String sourceEmail = friendship.getSourceEmail();
         String destinationEmail = friendship.getDestinationEmail();
@@ -76,13 +77,13 @@ public class RequestController {
         friendshipService.editFriendship(id, newFriendship);
 
 
-        String response = requestService.request(SERVER_URL, "ACCEPT", sourceEmail, destinationEmail);
+        String response = requestService.request(SERVER_URL, "ACCEPT", sourceEmail, destinationEmail, sourceHost, destinationHost);
 
         System.out.println(response);
         return "redirect:/";
     }
     @PostMapping("/denyFriendship")
-    public String denyFriendship(@ModelAttribute("id") Long id,  @ModelAttribute("destinationHost") String destinationHost){
+    public String denyFriendship(@ModelAttribute("id") Long id,  @ModelAttribute("destinationHost") String destinationHost, @ModelAttribute("sourceHost") String sourceHost){
         Friendship friendship = friendshipService.findById(id);
         String sourceEmail = friendship.getSourceEmail();
         String destinationEmail = friendship.getDestinationEmail();
@@ -94,11 +95,11 @@ public class RequestController {
 
 
         friendshipService.deleteFriendship(id);
-        String response = requestService.request(SERVER_URL, "DENY", sourceEmail, destinationEmail);
+        String response = requestService.request(SERVER_URL, "DENY", sourceEmail, destinationEmail, sourceHost, destinationHost);
         return "redirect:/";
     }
     @PostMapping("/blockFriendship")
-    public String blockFriendship(@ModelAttribute("id") Long id,  @ModelAttribute("destinationHost") String destinationHost){
+    public String blockFriendship(@ModelAttribute("id") Long id,  @ModelAttribute("destinationHost") String destinationHost, @ModelAttribute("sourceHost") String sourceHost){
         Friendship friendship = friendshipService.findById(id);
         String sourceEmail = friendship.getSourceEmail();
         String destinationEmail = friendship.getDestinationEmail();
@@ -108,13 +109,13 @@ public class RequestController {
 
 
         Friendship newFriendship = new Friendship(friendship.getSourceEmail(), friendship.getDestinationEmail(), friendship.getDateEstablished(), destinationHost, "blocked");
-        String response = requestService.request(SERVER_URL, "BLOCK", sourceEmail, destinationEmail);
+        String response = requestService.request(SERVER_URL, "BLOCK", sourceEmail, destinationEmail, sourceHost, destinationHost);
 
         System.out.println(response);
         return "redirect:/";
     }
     @PostMapping("/removeFriendship")
-    public String removeFriendship(@ModelAttribute("id") Long id,  @ModelAttribute("destinationHost") String destinationHost){
+    public String removeFriendship(@ModelAttribute("id") Long id,  @ModelAttribute("destinationHost") String destinationHost, @ModelAttribute("sourceHost") String sourceHost){
         Friendship friendship = friendshipService.findById(id);
         String sourceEmail = friendship.getSourceEmail();
         String destinationEmail = friendship.getDestinationEmail();
@@ -126,7 +127,7 @@ public class RequestController {
 
 
         friendshipService.deleteFriendship(id);
-        String response = requestService.request(SERVER_URL, "REMOVE", sourceEmail, destinationEmail);
+        String response = requestService.request(SERVER_URL, "REMOVE", sourceEmail, destinationEmail, sourceHost, destinationHost);
         System.out.println(response);
         return "redirect:/";
     }

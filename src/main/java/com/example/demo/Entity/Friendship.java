@@ -39,6 +39,9 @@ public class Friendship {
     @Column(nullable = false)
     private String destinationHost;
 
+    @Column(nullable = false)
+    private String sourceHost;
+
     @Column()
     private String status = "pending";
 

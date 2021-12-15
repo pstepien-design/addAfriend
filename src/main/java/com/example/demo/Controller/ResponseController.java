@@ -30,19 +30,21 @@ public class ResponseController {
     @RequestMapping(method = RequestMethod.POST, path = "/friendship")
    public ResponseEntity<String> getFriendship(@RequestBody Object friendshipRequest){
 
-        String destinationHost = "localhost:8080";
-        String ourHost = "localhost:8080";
+
+
         System.out.println("Root request: " +friendshipRequest);
         String reqSplit[] = friendshipRequest.toString().split(" ");
         for(String s: reqSplit){
             System.out.println(s);
         }
+        String destinationHost = reqSplit[4];
+        String sourceHost = reqSplit[3];
         System.out.println("preparing response");
         if(reqSplit[0].toUpperCase().contains("ADD")){
-            String sourceEmail = reqSplit[1]+"@"+reqSplit[2];
-            String destinationEmail = reqSplit[3]+"@"+reqSplit[4];
+            String sourceEmail = reqSplit[1];
+            String destinationEmail = reqSplit[2];
            if(!(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail))) {
-               Friendship friendship = new Friendship(sourceEmail, destinationEmail, date, destinationHost);
+               Friendship friendship = new Friendship(sourceEmail, destinationEmail, date, destinationHost, "requested");
                friendshipService.addFriendship(friendship);
                String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been added";
                return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
@@ -52,8 +54,8 @@ public class ResponseController {
                return ResponseEntity.ok(responseService.createResponse(HttpStatus.INTERNAL_SERVER_ERROR, phrase));  }
         }
         else if(reqSplit[0].toUpperCase().contains("BLOCK")){
-            String sourceEmail = reqSplit[1]+"@"+reqSplit[2];
-            String destinationEmail = reqSplit[3]+"@"+reqSplit[4];
+            String sourceEmail = reqSplit[1];
+            String destinationEmail =reqSplit[2];
             if((friendshipService.ifFriendshipExists(sourceEmail, destinationEmail))) {
              Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
              friendship.setStatus("blocked");
@@ -66,15 +68,17 @@ public class ResponseController {
             }
         }
         else if(reqSplit[0].toUpperCase().contains("DENY")){
-            String sourceEmail = reqSplit[1]+"@"+reqSplit[2];
-            String destinationEmail = reqSplit[3]+"@"+reqSplit[4];
+            String sourceEmail = reqSplit[1];
+            String destinationEmail = reqSplit[2];
             if(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)) {
                 System.out.println("denying");
                 Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
-                friendship.setStatus("denied");
-                String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been denied";
-                System.out.println(phrase);
-                return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
+                if (friendship.getStatus().equals("pending")) {
+                    friendship.setStatus("denied");
+                    String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been denied";
+                    System.out.println(phrase);
+                    return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
+                }
             }
             else{
                 String phrase = "Friendship does not exists";
@@ -82,13 +86,15 @@ public class ResponseController {
             }
         }
         else if(reqSplit[0].toUpperCase().contains("ACCEPT")){
-            String sourceEmail = reqSplit[1]+"@"+reqSplit[2];
-            String destinationEmail = reqSplit[3]+"@"+reqSplit[4];
-            if(((friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)))&& (destinationHost != ourHost)) {
+            String sourceEmail = reqSplit[1];
+            String destinationEmail =reqSplit[2];
+            if(((friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)))) {
                 Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
-                friendship.setStatus("accepted");
-                String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been accepted";
-                return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
+                if(friendship.getStatus().equals("pending")) {
+                    friendship.setStatus("accepted");
+                    String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been accepted";
+                    return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
+                }
             }
             else{
                 String phrase = "Friendship could not have been accepted";
@@ -97,9 +103,9 @@ public class ResponseController {
             }
         }
         else if(reqSplit[0].toUpperCase().contains("REMOVE")){
-            String sourceEmail = reqSplit[1]+"@"+reqSplit[2];
-            String destinationEmail = reqSplit[3]+"@"+reqSplit[4];
-            if(((friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)))&& (destinationHost != ourHost)) {
+            String sourceEmail = reqSplit[1];
+            String destinationEmail =reqSplit[2];
+            if(((friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)))) {
                 Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
                 friendshipService.deleteFriendship(friendship.getId());
                 String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been removed";
@@ -109,13 +115,15 @@ public class ResponseController {
                 String phrase = "Friendship could not have been removed";
                 return ResponseEntity.ok(responseService.createResponse(HttpStatus.INTERNAL_SERVER_ERROR, phrase));
             }
+
         }
         else{
           String phrase = "Desired request could not be made";
             return ResponseEntity.ok(responseService.createResponse(HttpStatus.INTERNAL_SERVER_ERROR, phrase));
 
         }
-
+        String phrase = "Desired request could not be made";
+        return ResponseEntity.ok(responseService.createResponse(HttpStatus.INTERNAL_SERVER_ERROR, phrase));
     }
 
 
