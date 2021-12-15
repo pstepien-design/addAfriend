@@ -72,7 +72,7 @@ public class RequestController {
             String sourceEmail = friendship.getSourceEmail();
             String destinationEmail = friendship.getDestinationEmail();
 
-            final String SERVER_URL = sourceHost + "/friendship";
+            final String SERVER_URL = destinationHost + "/friendship";
 
             Friendship newFriendship = new Friendship(friendship.getSourceEmail(), friendship.getDestinationEmail(), friendship.getDateEstablished(), destinationHost,  "accepted", sourceHost);
             friendshipService.editFriendship(id, newFriendship);
@@ -90,7 +90,7 @@ public class RequestController {
         String sourceEmail = friendship.getSourceEmail();
         String destinationEmail = friendship.getDestinationEmail();
 
-        final String SERVER_URL = sourceHost+"/friendship";
+        final String SERVER_URL = destinationHost+"/friendship";
 
 
 

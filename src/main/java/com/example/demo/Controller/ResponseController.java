@@ -41,8 +41,8 @@ public class ResponseController {
         String sourceHost = reqSplit[2];
         System.out.println("preparing response");
         if(reqSplit[0].toUpperCase().contains("ADD")){
-            String sourceEmail = reqSplit[1];
-            String destinationEmail = reqSplit[3];
+            String sourceEmail = reqSplit[3];
+            String destinationEmail = reqSplit[1];
            if(!(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail))) {
                Friendship friendship = new Friendship(sourceEmail, destinationEmail, date, destinationHost, "requested", sourceHost);
                friendshipService.addFriendship(friendship);
