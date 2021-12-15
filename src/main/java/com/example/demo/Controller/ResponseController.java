@@ -64,7 +64,7 @@ public class ResponseController {
                 System.out.println(sourceEmail);
                 System.out.println(destinationEmail);
                 Friendship myFriendship = friendshipService.findBySourceEmailAndDestinationEmail(destinationEmail, sourceEmail);
-                System.out.println(myFriendship.getStatus());
+                myFriendship.setStatus("accepted");
 
                    String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been accepted";
                    return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
@@ -82,8 +82,8 @@ public class ResponseController {
            String sourceEmail = reqSplit[3];
             String destinationEmail =reqSplit[1];
             if(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)){
-                Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
-                    friendship.setStatus("blocked");
+                Friendship myFriendship = friendshipService.findBySourceEmailAndDestinationEmail(destinationEmail, sourceEmail);
+                myFriendship.setStatus("blocked");
                    String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been blocked";
                    return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
 
@@ -98,7 +98,8 @@ public class ResponseController {
             String sourceEmail = reqSplit[3];
             String destinationEmail =reqSplit[1];
             if(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)){
-                Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
+                Friendship myFriendship = friendshipService.findBySourceEmailAndDestinationEmail(destinationEmail, sourceEmail);
+                friendshipService.deleteFriendship(myFriendship.getId());
 
                     String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been denied";
                     return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
