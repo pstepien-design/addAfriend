@@ -73,6 +73,7 @@ public class ResponseController {
 
                }
                else{
+                   System.out.println("Frienship status" +myFriendship.getStatus());
                    String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " could not have been accepted";
                    return ResponseEntity.ok(responseService.createResponse(HttpStatus.INTERNAL_SERVER_ERROR, phrase));
                }
