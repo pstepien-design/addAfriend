@@ -48,7 +48,7 @@ public class Friendship {
     @Column()
     private LocalDate dateEstablished;
 
-    public Friendship(String sourceEmail, String destinationEmail, LocalDate dateEstablished, String destinationHost) {
+    public Friendship(String sourceEmail, String destinationEmail, LocalDate dateEstablished, String destinationHost, String sourceHost) {
         this.sourceEmail = sourceEmail;
         this.destinationEmail = destinationEmail;
         this.dateEstablished = dateEstablished;
@@ -67,7 +67,7 @@ public class Friendship {
         this.dateEstablished = dateEstablished;
     }
 
-    public Friendship(String sourceEmail, String destinationEmail, LocalDate dateEstablished, String destinationHost, String status) {
+    public Friendship(String sourceEmail, String destinationEmail, LocalDate dateEstablished, String destinationHost, String status, String sourceHost) {
         this.sourceEmail = sourceEmail;
         this.destinationEmail = destinationEmail;
         this.dateEstablished = dateEstablished;

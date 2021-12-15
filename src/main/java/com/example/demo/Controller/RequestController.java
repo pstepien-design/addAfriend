@@ -52,7 +52,7 @@ public class RequestController {
 
 
 
-            Friendship friendship = new Friendship(sourceEmail, destinationEmail, date, destinationHost);
+            Friendship friendship = new Friendship(sourceEmail, destinationEmail, date, destinationHost, sourceHost);
             friendshipService.addFriendship(friendship);
             String response = requestService.request(SERVER_URL, "ADD", sourceEmail, destinationEmail, sourceHost, destinationHost);
 
@@ -74,7 +74,7 @@ public class RequestController {
 
             final String SERVER_URL = destinationHost + "/friendship";
 
-            Friendship newFriendship = new Friendship(friendship.getSourceEmail(), friendship.getDestinationEmail(), friendship.getDateEstablished(), destinationHost, "accepted");
+            Friendship newFriendship = new Friendship(friendship.getSourceEmail(), friendship.getDestinationEmail(), friendship.getDateEstablished(), destinationHost,  "accepted", sourceHost);
             friendshipService.editFriendship(id, newFriendship);
 
 
@@ -110,7 +110,7 @@ public class RequestController {
 
 
 
-        Friendship newFriendship = new Friendship(friendship.getSourceEmail(), friendship.getDestinationEmail(), friendship.getDateEstablished(), destinationHost, "blocked");
+        Friendship newFriendship = new Friendship(friendship.getSourceEmail(), friendship.getDestinationEmail(), friendship.getDateEstablished(), destinationHost, "blocked", sourceHost);
         String response = requestService.request(SERVER_URL, "BLOCK", sourceEmail, destinationEmail, sourceHost, destinationHost);
 
         System.out.println(response);

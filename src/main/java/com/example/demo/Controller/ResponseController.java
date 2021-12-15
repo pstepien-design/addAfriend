@@ -44,7 +44,7 @@ public class ResponseController {
             String sourceEmail = reqSplit[1];
             String destinationEmail = reqSplit[2];
            if(!(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail))) {
-               Friendship friendship = new Friendship(sourceEmail, destinationEmail, date, destinationHost, "requested");
+               Friendship friendship = new Friendship(sourceEmail, destinationEmail, date, destinationHost, "requested", sourceHost);
                friendshipService.addFriendship(friendship);
                String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been added";
                return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
