@@ -79,31 +79,6 @@
         </table>
     </form>
 
-    <form method="POST">
-        <table id = "denyTable">
-            <p>Denied friednships</p>
-            <tr>
-                <th>Date</th>
-                <th>Source email</th>
-                <th>Destination email</th>
-                <th>Destination source</th>
-
-            </tr>
-            <tr  th:each="friendship : ${deniedFriendships}">
-                <input readonly hidden="true" type="hidden" name="id"
-                       id="friendshipId2"
-                       th:value="${friendship.id}">
-                <input readonly hidden="true" type="hidden" name="destinationHost"
-                       id="destinationHostId3"
-                       th:value="${friendship.destinationHost}">
-                <td th:text="${friendship.dateEstablished}"></td>
-                <td th:text="${friendship.sourceEmail}"></td>
-                <td th:text="${friendship.destinationEmail}"></td>
-                <td th:text="${friendship.destinationHost}"></td>
-
-            </tr>
-        </table>
-    </form>
 
     <form method="POST">
         <table id = "blockTable">
