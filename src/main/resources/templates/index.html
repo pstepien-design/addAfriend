@@ -66,7 +66,7 @@
             <td th:text="${friendship.destinationHost}"></td>
             <td>
                 <button type="submit" th:formaction="acceptFriendship">Accept</button>
-                <!--<button type="submit" th:formaction="denyFriendship">Deny</button>-->
+                <button type="submit" th:formaction="denyFriendship">Deny</button>
 
             </td>
         </tr>
@@ -95,17 +95,17 @@
                 <td th:text="${friendship.sourceEmail}"></td>
                 <td th:text="${friendship.destinationEmail}"></td>
                 <td th:text="${friendship.destinationHost}"></td>
-                <!--<td>
+                <td>
                     <button type="submit" th:formaction="blockFriendship">Block</button>
                     <button type="submit" th:formaction="removeFriendship">Remove</button>
 
-                </td>-->
+                </td>
             </tr>
         </table>
     </form>
 
 
-  <!--  <form method="POST">
+ <form method="POST">
         <table id = "blockTable">
             <p>Blocked friednships</p>
             <tr>
@@ -129,7 +129,7 @@
 
             </tr>
         </table>
-    </form>-->
+    </form>
     </body>
 
 </html>
