@@ -37,8 +37,8 @@ public class ResponseController {
         for(String s: reqSplit){
             System.out.println(s);
         }
-        String destinationHost = reqSplit[4];
-        String sourceHost = reqSplit[2];
+        String destinationHost = reqSplit[2];
+        String sourceHost = reqSplit[4];
         System.out.println("preparing response");
         if(reqSplit[0].toUpperCase().contains("ADD")){
             String sourceEmail = reqSplit[3];
@@ -59,6 +59,8 @@ public class ResponseController {
             System.out.println("we are here");
             if(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)){
                 System.out.println("friendship exists");
+                System.out.println(sourceEmail);
+                System.out.println(destinationEmail);
                 Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
                if(friendship.getStatus().equals("requested")) {
                    System.out.println("friendship status is requested");
