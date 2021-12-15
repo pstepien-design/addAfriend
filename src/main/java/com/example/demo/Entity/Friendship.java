@@ -53,6 +53,7 @@ public class Friendship {
         this.destinationEmail = destinationEmail;
         this.dateEstablished = dateEstablished;
         this.destinationHost = destinationHost;
+        this.sourceHost = sourceHost;
     }
     public Friendship(String sourceEmail, String destinationEmail, LocalDate dateEstablished) {
         this.sourceEmail = sourceEmail;
@@ -73,6 +74,7 @@ public class Friendship {
         this.dateEstablished = dateEstablished;
         this.destinationHost = destinationHost;
         this.status = status;
+        this.sourceHost = sourceHost;
     }
 
 }
