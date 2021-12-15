@@ -140,6 +140,7 @@ public class RequestController {
     public String index(Model model) {
         List<Friendship> friendshipList = friendshipService.findAllFriendships();
         List<Friendship> pendingFriendships = new ArrayList<>();
+        List<Friendship> requestedFriendships = new ArrayList<>();
         List<Friendship> acceptedFriendships = new ArrayList<>();
         List<Friendship> deniedFriendships = new ArrayList<>();
         List<Friendship> blockedFriendships = new ArrayList<>();
@@ -147,6 +148,9 @@ public class RequestController {
             System.out.println(friendships.getStatus());
             if(friendships.getStatus().equals("pending")){
                 pendingFriendships.add(friendships);
+            }
+            else if(friendships.getStatus().equals("requested")){
+                requestedFriendships.add(friendships);
             }
             else if(friendships.getStatus().equals("accepted")){
                 acceptedFriendships.add(friendships);
@@ -160,6 +164,7 @@ public class RequestController {
         }
 
         model.addAttribute("pendingFriendships", pendingFriendships);
+        model.addAttribute("requestedFriendships", requestedFriendships);
         model.addAttribute("acceptedFriendships", acceptedFriendships);
         model.addAttribute("deniedFriendships", deniedFriendships);
         model.addAttribute("blockedFriendships", blockedFriendships);
