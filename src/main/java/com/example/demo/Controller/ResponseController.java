@@ -45,7 +45,7 @@ public class ResponseController {
             String destinationEmail = reqSplit[3];
             System.out.println("sourceEmail" + sourceEmail);
             System.out.println("destinationEmail" + destinationEmail);
-           if(!(friendshipService.ifFriendshipExists(destinationEmail, sourceEmail))) {
+           if(!(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail))) {
                Friendship friendship = new Friendship(sourceEmail, destinationEmail, date, destinationHost, "requested", sourceHost);
                friendshipService.addFriendship(friendship);
                String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been added";
@@ -63,10 +63,10 @@ public class ResponseController {
                 System.out.println("friendship exists");
                 System.out.println(sourceEmail);
                 System.out.println(destinationEmail);
-                Friendship friendship = friendshipService.findBySourceEmailAndDestinationEmail(sourceEmail, destinationEmail);
-               if(friendship.getStatus().equals("requested")) {
+                Friendship myFriendship = friendshipService.findBySourceEmailAndDestinationEmail(destinationEmail, sourceEmail);
+               if(myFriendship.getStatus().equals("requested")) {
                    System.out.println("friendship status is requested");
-                   friendship.setStatus("accepted");
+                   myFriendship.setStatus("accepted");
                    String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been accepted";
                    return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
 
