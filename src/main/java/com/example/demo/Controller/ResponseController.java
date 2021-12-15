@@ -64,7 +64,9 @@ public class ResponseController {
                 System.out.println(sourceEmail);
                 System.out.println(destinationEmail);
                 Friendship myFriendship = friendshipService.findBySourceEmailAndDestinationEmail(destinationEmail, sourceEmail);
-                myFriendship.setStatus("accepted");
+                Friendship newFriendship = myFriendship;
+                newFriendship.setStatus("accepted");
+                friendshipService.editFriendship(myFriendship.getId(), newFriendship);
 
                    String phrase = "Friendship between " + sourceEmail + " and " + destinationEmail + " has been accepted";
                    return ResponseEntity.ok(responseService.createResponse(HttpStatus.OK, phrase));
