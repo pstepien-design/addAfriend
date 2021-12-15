@@ -54,8 +54,8 @@ public class ResponseController {
                return ResponseEntity.ok(responseService.createResponse(HttpStatus.INTERNAL_SERVER_ERROR, phrase));  }
         }
         else if(reqSplit[0].toUpperCase().contains("ACCEPT")){
-            String sourceEmail = reqSplit[1];
-            String destinationEmail =reqSplit[3];
+            String sourceEmail = reqSplit[3];
+            String destinationEmail =reqSplit[1];
             System.out.println("we are here");
             if(friendshipService.ifFriendshipExists(sourceEmail, destinationEmail)){
                 System.out.println("friendship exists");
